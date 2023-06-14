@@ -12,5 +12,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     Optional<Category> findByName(String category);
 
-    Optional<Category> findByArticle(Article article);
+    //Optional<Category> findByArticle(Article article); call article.getCategories()
+    //    instead when needed,
+    //    spring cannot create the bean for this
 }

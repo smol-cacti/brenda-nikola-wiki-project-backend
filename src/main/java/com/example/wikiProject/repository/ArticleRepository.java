@@ -10,7 +10,9 @@ import java.util.List;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
-    List<Article> findAllByCategory(Category category);
+    //List<Article> findAllByCategory(Category category); call category.getArticles()
+    // instead when needed,
+    // spring cannot create the bean for this
 
     List<Article> findByUser(User user);
 }

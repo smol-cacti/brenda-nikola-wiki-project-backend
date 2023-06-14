@@ -44,7 +44,7 @@ public class ArticleService {
     public List<ArticleDTO> getArticlesByCategory(Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new CategoryNotFoundException(categoryId.toString()));
-        List<Article> articles = articleRepository.findAllByCategory(category);
+        List<Article> articles = category.getArticles();
         return articles.stream().map(articleMapper::mapToDto).collect(toList());
     }
 

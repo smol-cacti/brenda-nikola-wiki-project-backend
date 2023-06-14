@@ -2,6 +2,8 @@ package com.example.wikiProject.mapper;
 import com.example.wikiProject.dto.ArticleDTO;
 import com.example.wikiProject.dto.ArticlePostRequest;
 import com.example.wikiProject.model.Article;
+import com.example.wikiProject.model.ArticleHistory;
+import com.example.wikiProject.model.Category;
 import com.example.wikiProject.model.User;
 import com.example.wikiProject.repository.ArticleHistoryRepository;
 import com.example.wikiProject.repository.CategoryRepository;
@@ -9,6 +11,8 @@ import com.example.wikiProject.service.AuthService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class ArticleMapper {
@@ -19,8 +23,6 @@ public abstract class ArticleMapper {
     private ArticleHistoryRepository articleHistoryRepository;
 
     @Mapping(target = "createdDate", expression = "java(java.time.Instant.now())")
-    @Mapping(target = "articleName", source = "articlePostRequest.articleName")
-    @Mapping(target = "description", source = "articlePostRequest.description")
     @Mapping(target = "user", source = "user")
     public abstract Article map(ArticlePostRequest articlePostRequest, User user);
 

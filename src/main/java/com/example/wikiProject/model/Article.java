@@ -22,14 +22,14 @@ public class Article {
     @Lob
     private String description;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @JoinColumn(name = "user")
     private User user;
     private Instant createdDate;
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoryId", referencedColumnName = "categoryId")
+    @JoinColumn(name = "categories")
     private List<Category> categories;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "articleHistoryId", referencedColumnName = "articleHistoryId")
+    @JoinColumn(name = "articleHistory")
     private List<ArticleHistory> articleHistory;
 }
