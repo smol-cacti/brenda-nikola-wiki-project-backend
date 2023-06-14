@@ -27,10 +27,8 @@ public abstract class ArticleMapper {
     public abstract Article map(ArticleRequest articleRequest, User user);
 
     @Mapping(target = "id", source = "articleId")
-    @Mapping(target = "subredditName", source = "subreddit.name")
+    @Mapping(target = "categoryName", source = "category.name")
     @Mapping(target = "userName", source = "user.username")
-    @Mapping(target = "commentCount", expression = "java(commentCount(post))")
-    @Mapping(target = "duration", expression = "java(getDuration(post))")
     public abstract AddArticleToCategory mapToDto(Article article);
 
     //TODO article history stuff
