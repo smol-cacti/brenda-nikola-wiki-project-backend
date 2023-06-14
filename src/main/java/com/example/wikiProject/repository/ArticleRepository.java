@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PostRepository extends JpaRepository<Article, Long> {
-    List<Article> findAllBySubreddit(Category category);
+public interface ArticleRepository extends JpaRepository<Article, Long> {
+    List<Article> findAllByCategory(Category category);
 
     List<Article> findByUser(User user);
 }

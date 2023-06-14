@@ -27,4 +27,8 @@ public class ArticleHistory {
     private Instant createdDate;
     private Long changedBytes;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "articleId", referencedColumnName = "articleId")
+    private Article article;
+
 }
