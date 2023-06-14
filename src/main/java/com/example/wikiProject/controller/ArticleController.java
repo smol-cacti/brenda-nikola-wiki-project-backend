@@ -1,6 +1,7 @@
 package com.example.wikiProject.controller;
 
 import com.example.wikiProject.dto.RegisterRequest;
+import com.example.wikiProject.service.ArticleService;
 import com.example.wikiProject.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

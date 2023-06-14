@@ -1,6 +1,6 @@
 package com.example.wikiProject.mapper;
-import com.example.wikiProject.dto.AddArticleToCategory;
-import com.example.wikiProject.dto.ArticleRequest;
+import com.example.wikiProject.dto.ArticleDTO;
+import com.example.wikiProject.dto.ArticlePostRequest;
 import com.example.wikiProject.model.Article;
 import com.example.wikiProject.model.User;
 import com.example.wikiProject.repository.ArticleHistoryRepository;
@@ -10,8 +10,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.Instant;
-import java.util.Optional;
 @Mapper(componentModel = "spring")
 public abstract class ArticleMapper {
 
@@ -21,21 +19,19 @@ public abstract class ArticleMapper {
     private ArticleHistoryRepository articleHistoryRepository;
 
     @Mapping(target = "createdDate", expression = "java(java.time.Instant.now())")
-    @Mapping(target = "articleName", source = "articleRequest.articleName")
-    @Mapping(target = "description", source = "articleRequest.description")
+    @Mapping(target = "articleName", source = "articlePostRequest.articleName")
+    @Mapping(target = "description", source = "articlePostRequest.description")
     @Mapping(target = "user", source = "user")
-    public abstract Article map(ArticleRequest articleRequest, User user);
+    public abstract Article map(ArticlePostRequest articlePostRequest, User user);
 
-    @Mapping(target = "id", source = "articleId")
-    @Mapping(target = "categoryName", source = "category.name")
-    @Mapping(target = "userName", source = "user.username")
-    public abstract AddArticleToCategory mapToDto(Article article);
+
+    public abstract ArticleDTO mapToDto(Article article);
 
     //TODO article history stuff
 
-    Integer categoryCount(Article article) {
-        return CategoryRepository.findByArticle(article).size();
-    }
+    //Integer categoryCount(Article article) {
+    //    return CategoryRepository.findByArticle(article).size();
+    //}
 
     // TODO make work
     //Instant getDuration(Article article) {

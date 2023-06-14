@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ArticleRequest {
+public class ArticlePostRequest {
     private Long articleId;
     private String articleName;
     @NotBlank(message = "Article Name cannot be empty or Null")

@@ -1,11 +1,11 @@
 package com.example.wikiProject.service;
-import com.example.wikiProject.dto.ArticleRequest;
-import com.example.wikiProject.exceptions.ArticleNotFoundException;
+import com.example.wikiProject.dto.ArticleDTO;
+import com.example.wikiProject.dto.ArticlePostRequest;
 import com.example.wikiProject.exceptions.CategoryNotFoundException;
-import com.example.wikiProject.exceptions.SpringWikiException;
 import com.example.wikiProject.mapper.ArticleMapper;
 import com.example.wikiProject.model.Article;
 import com.example.wikiProject.model.Category;
+import com.example.wikiProject.model.User;
 import com.example.wikiProject.repository.ArticleHistoryRepository;
 import com.example.wikiProject.repository.ArticleRepository;
 import com.example.wikiProject.repository.CategoryRepository;
@@ -34,13 +34,13 @@ public class ArticleService {
     private final AuthService authService;
     private final ArticleMapper articleMapper;
 
-    public void save(ArticleRequest articleRequest) {
-        articleRepository.save(articleMapper.map(articleRequest, authService.getCurrentUser()));
+    public void save(ArticlePostRequest articlePostRequest) {
+        articleRepository.save(articleMapper.map(articlePostRequest, authService.getCurrentUser()));
 
     }
 
     @Transactional(readOnly = true)
-    public List<Article> getArticlesByCategory(Long categoryId) {
+    public List<ArticleDTO> getArticlesByCategory(Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new CategoryNotFoundException(categoryId.toString()));
         List<Article> articles = articleRepository.findAllByCategory(category);
@@ -48,13 +48,11 @@ public class ArticleService {
     }
 
     @Transactional(readOnly = true)
-    public List<ArticleResponse> getArticlesByUsername(String username) {
+    public List<ArticleDTO> getArticlesByUsername(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
-        return articleRepository.findByUser(user)
-                .stream()
-                .map(articleMapper::mapToDto)
-                .collect(toList());
+        List<Article> articles = articleRepository.findByUser(user);
+        return articles.stream().map(articleMapper::mapToDto).collect(toList());
     }
 
 }
