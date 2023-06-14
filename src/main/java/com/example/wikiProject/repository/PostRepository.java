@@ -1,7 +1,7 @@
 package com.example.wikiProject.repository;
 
-import com.example.wikiProject.model.Post;
-import com.example.wikiProject.model.Subreddit;
+import com.example.wikiProject.model.Article;
+import com.example.wikiProject.model.Category;
 import com.example.wikiProject.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PostRepository extends JpaRepository<Post, Long> {
-    List<Post> findAllBySubreddit(Subreddit subreddit);
+public interface PostRepository extends JpaRepository<Article, Long> {
+    List<Article> findAllBySubreddit(Category category);
 
-    List<Post> findByUser(User user);
+    List<Article> findByUser(User user);
 }

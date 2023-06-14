@@ -1,13 +1,13 @@
 package com.example.wikiProject.repository;
 
-import com.example.wikiProject.model.Subreddit;
+import com.example.wikiProject.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface SubredditRepository extends JpaRepository<Subreddit, Long> {
+public interface SubredditRepository extends JpaRepository<Category, Long> {
 
-    Optional<Subreddit> findByName(String subredditName);
+    Optional<Category> findByName(String subredditName);
 }

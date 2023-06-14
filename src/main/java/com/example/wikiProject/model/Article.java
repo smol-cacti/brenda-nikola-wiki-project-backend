@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Setter
@@ -11,20 +12,24 @@ import java.time.Instant;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Post {
+@Table
+public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postId;
-    private String postName;
+    private Long articleId;
+    private String articleName;
     private String url;
     @Lob
     private String description;
-    private Integer voteCount = 0;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private User user;
     private Instant createdDate;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", referencedColumnName = "id")
-    private Subreddit subreddit;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoryId", referencedColumnName = "categoryId")
+    private List<Category> categories;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "articleHistoryId", referencedColumnName = "articleHistoryId")
+    private List<ArticleHistory> articleHistory;
 }
