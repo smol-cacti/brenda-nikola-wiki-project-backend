@@ -1,6 +1,7 @@
 package com.example.wikiProject.service;
 import com.example.wikiProject.dto.ArticleDTO;
 import com.example.wikiProject.dto.ArticlePostRequest;
+import com.example.wikiProject.exceptions.ArticleNotFoundException;
 import com.example.wikiProject.exceptions.CategoryNotFoundException;
 import com.example.wikiProject.mapper.ArticleMapper;
 import com.example.wikiProject.model.Article;
@@ -55,4 +56,16 @@ public class ArticleService {
         return articles.stream().map(articleMapper::mapToDto).collect(toList());
     }
 
+    @Transactional(readOnly = true)
+    public ArticleDTO getArticle(Long id) {
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new ArticleNotFoundException(id.toString()));
+        return articleMapper.mapToDto(article);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ArticleDTO> getAllArticles() {
+        List<Article> articles = articleRepository.findAll();
+        return articles.stream().map(articleMapper::mapToDto).collect(toList());
+    }
 }

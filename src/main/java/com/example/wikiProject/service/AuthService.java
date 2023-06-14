@@ -64,10 +64,11 @@ public class AuthService
         return token;
     }
 
+    @Transactional(readOnly = true)
     public User getCurrentUser() {
-        OAuth2ResourceServerProperties.Jwt principal = (OAuth2ResourceServerProperties.Jwt) SecurityContextHolder.
+        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.
                 getContext().getAuthentication().getPrincipal();
-        return userRepository.findByUsername(principal.getSubject())
-                .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getSubject()));
+        return userRepository.findByUsername(principal.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getUsername()));
     }
 }
