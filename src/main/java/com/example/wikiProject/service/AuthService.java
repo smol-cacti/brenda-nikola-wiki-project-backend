@@ -8,6 +8,16 @@ import com.example.wikiProject.model.VerificationToken;
 import com.example.wikiProject.repository.UserRepository;
 import com.example.wikiProject.repository.VerificationTokenRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
+import org.springframework.security.oauth2.jwt.Jwt;
+import com.auth0.jwt.JWT;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,5 +62,12 @@ public class AuthService
 
         verificationTokenRepository.save(verificationToken);
         return token;
+    }
+
+    public User getCurrentUser() {
+        OAuth2ResourceServerProperties.Jwt principal = (OAuth2ResourceServerProperties.Jwt) SecurityContextHolder.
+                getContext().getAuthentication().getPrincipal();
+        return userRepository.findByUsername(principal.getSubject())
+                .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getSubject()));
     }
 }
