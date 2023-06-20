@@ -22,13 +22,13 @@ public class ArticleHistory {
     @Lob
     private String description;
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @JoinColumn(name = "userId")
     private User user;
     private Instant createdDate;
     private Long changedBytes;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "articleId", referencedColumnName = "articleId")
+    @JoinColumn(name = "article")
     private Article article;
 
 }
