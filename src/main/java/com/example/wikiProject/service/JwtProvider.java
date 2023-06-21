@@ -47,6 +47,7 @@ import static io.jsonwebtoken.Jwts.parser;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -88,7 +89,7 @@ public class JwtProvider {
         return Jwts.builder()
                 .setSubject(principal.getUsername())
                 .setIssuedAt(Date.from(Instant.now()))
-                .signWith(getPrivateKey())
+                .signWith(SignatureAlgorithm.RS256, getPrivateKey())
                 .setExpiration(Date.from(Instant.now().plusMillis(jwtExpirationInMillis)))
                 .compact();
     }
@@ -97,7 +98,7 @@ public class JwtProvider {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(Date.from(Instant.now()))
-                .signWith(getPrivateKey())
+                .signWith(SignatureAlgorithm.RS256, getPrivateKey())
                 .setExpiration(Date.from(Instant.now().plusMillis(jwtExpirationInMillis)))
                 .compact();
     }
