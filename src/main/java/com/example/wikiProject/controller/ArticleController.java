@@ -39,12 +39,12 @@ public class ArticleController {
     }
 
     @GetMapping("by-category/{id}")
-    public ResponseEntity<List<ArticleDTO>> getPostsByCategory(@PathVariable Long id) {
+    public ResponseEntity<List<ArticleDTO>> getArticlesByCategory(@PathVariable Long id) {
         return status(HttpStatus.OK).body(articleService.getArticlesByCategory(id));
     }
 
     @GetMapping("by-user/{name}")
-    public ResponseEntity<List<ArticleDTO>> getPostsByUsername(@PathVariable String name) {
+    public ResponseEntity<List<ArticleDTO>> getArticlesByUsername(@PathVariable String name) {
         return status(HttpStatus.OK).body(articleService.getArticlesByUsername(name));
     }
 
